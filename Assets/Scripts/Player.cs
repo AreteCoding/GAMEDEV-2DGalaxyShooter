@@ -15,6 +15,18 @@ public class Player : MonoBehaviour, IVelocity
 
     [SerializeField] Transform firePosition;
     [SerializeField] GameObject pfProjectile;
+
+    //Cooldown System
+    [SerializeField] float fireRate;
+    float cooldownTimer;
+    [SerializeField] float reloadRate;  // should be slower than fireRate
+    float reloadTimer;
+    [SerializeField] int projectileCapacity;
+    int projectileCount;
+    private void Start()
+    {
+        projectileCount = projectileCapacity;
+    }
     public void SetVelocity(Vector3 moveVector)
     {
         this.moveVector = moveVector;
@@ -22,11 +34,14 @@ public class Player : MonoBehaviour, IVelocity
 
     void Update()
     {
-        MovePlayer();
-        FireWeapon();
+        MovementLogic();
+        ReloadLogic();
+        CooldownLogic();    
+        FiringLogic();
+       
     }
 
-    private void MovePlayer()
+    private void MovementLogic()
     {
         transform.position += moveVector * moveSpeed * Time.deltaTime;
         CheckBounds();
@@ -39,11 +54,32 @@ public class Player : MonoBehaviour, IVelocity
         transform.position = boundedPosition;
     }
 
-    private void FireWeapon()
+    private void FiringLogic()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+
+        if(Input.GetKeyDown(KeyCode.Space) && cooldownTimer <= 0 && projectileCount > 0)
         {
             Instantiate(pfProjectile, firePosition.position, Quaternion.identity);
+
+            projectileCount--;
+            cooldownTimer = fireRate;
+            reloadTimer = reloadRate;
+        }
+    }
+
+    private void CooldownLogic()
+    {
+        cooldownTimer -= Time.deltaTime;
+    }
+
+    private void ReloadLogic()
+    {
+        reloadTimer -= Time.deltaTime;
+
+        if(projectileCount < projectileCapacity && reloadTimer <=0)
+        {
+            projectileCount++;
+            reloadTimer = reloadRate;
         }
     }
 }
