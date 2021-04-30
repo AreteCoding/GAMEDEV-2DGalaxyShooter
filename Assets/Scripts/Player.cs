@@ -29,4 +29,9 @@ public class Player : MonoBehaviour, IVelocity
         boundedPosition.y = Mathf.Clamp(transform.position.y, lowerBound, upperBound);
         transform.position = boundedPosition;
     }
+
+    public void Damage()
+    {
+        Debug.Log("Version control experiment test for Damage function");
+    }
 }

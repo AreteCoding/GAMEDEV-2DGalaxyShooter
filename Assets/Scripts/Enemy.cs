@@ -47,6 +47,13 @@ public class Enemy : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
+            Player player = other.transform.GetComponent<Player>();
+
+            if (player)
+            {
+                player.Damage();
+            }
+
             Destroy(other.gameObject);
             Destroy(this.gameObject);
         }
