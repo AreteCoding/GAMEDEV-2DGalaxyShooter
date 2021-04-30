@@ -23,6 +23,8 @@ public class Player : MonoBehaviour, IVelocity
     float reloadTimer;
     [SerializeField] int projectileCapacity;
     int projectileCount;
+
+    [SerializeField] int playerLives = 3;
     private void Start()
     {
         projectileCount = projectileCapacity;
@@ -80,6 +82,16 @@ public class Player : MonoBehaviour, IVelocity
         {
             projectileCount++;
             reloadTimer = reloadRate;
+        }
+    }
+
+    public void Damage()
+    {
+        playerLives--;
+
+        if(playerLives < 1)
+        {
+            Destroy(this.gameObject);
         }
     }
 }

@@ -458,3 +458,6 @@ MonoBehaviour:
   rightBound: 6.5
   firePosition: {fileID: 914714117}
   pfProjectile: {fileID: 4696779110922925548, guid: 07f6f7c78abebd640b266dd47b055e5a, type: 3}
+  fireRate: 0.4
+  reloadRate: 0.6
+  projectileCapacity: 5
