@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputManagerMovement : MonoBehaviour
+public class MovementInput : MonoBehaviour
 {
     IVelocity iVelocity;
 
