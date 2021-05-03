@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Player : MonoBehaviour, IVelocity
 {
+    public event EventHandler OnPlayerDeath;
+
     [SerializeField] float moveSpeed;
     Vector3 moveVector;
 
@@ -92,6 +95,7 @@ public class Player : MonoBehaviour, IVelocity
         if(playerLives < 1)
         {
             Destroy(this.gameObject);
+            OnPlayerDeath?.Invoke(this, EventArgs.Empty);
         }
     }
 }

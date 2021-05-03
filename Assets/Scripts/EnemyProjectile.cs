@@ -16,4 +16,19 @@ public class EnemyProjectile : MonoBehaviour
     {
         transform.position += Vector3.down * moveSpeed * Time.deltaTime;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Player player = other.transform.GetComponent<Player>();
+
+            if (player)
+            {
+                player.Damage();
+            }
+          
+            Destroy(this.gameObject);
+        }
+    }
 }
