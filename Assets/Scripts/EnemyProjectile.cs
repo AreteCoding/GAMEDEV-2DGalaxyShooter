@@ -17,7 +17,7 @@ public class EnemyProjectile : MonoBehaviour
         transform.position += Vector3.down * moveSpeed * Time.deltaTime;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
