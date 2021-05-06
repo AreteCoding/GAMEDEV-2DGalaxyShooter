@@ -5,7 +5,7 @@ using System;
 
 public class SpawnManager : MonoBehaviour
 {
-
+    [SerializeField] GameObject pfPowerupVisual;
     [SerializeField] GameObject pfEnemy;
     Transform enemyContainer;
 
@@ -24,21 +24,35 @@ public class SpawnManager : MonoBehaviour
         enemyContainer = transform.Find("EnemyContainer");
         if(enemyContainer != null)
         {
-            StartCoroutine(SpawnRoutine());
+            StartCoroutine(SpawnEnemyRoutine());
         }
+
+        StartCoroutine(SpawnPowerupRoutine());
        
     }
 
 
 
-    IEnumerator SpawnRoutine()
+    IEnumerator SpawnEnemyRoutine()
     {
         while(isPlayerAlive)
         {
-            Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(-4.2f, 4.2f), 6, 0);
+            Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(-10.5f, 10.5f), 6, 0);
             GameObject newEnemy = Instantiate(pfEnemy, spawnPosition, Quaternion.identity);
             newEnemy.transform.parent = enemyContainer;
             yield return new WaitForSeconds(2.5f);
+        }
+
+        yield return null;
+    }
+
+    IEnumerator SpawnPowerupRoutine()
+    {
+        while (isPlayerAlive)
+        {
+            Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(-10.5f, 10.5f), 6, 0);
+            GameObject newPowerup = Instantiate(pfEnemy, spawnPosition, Quaternion.identity);
+            yield return new WaitForSeconds(UnityEngine.Random.Range(8, 15));
         }
 
         yield return null;

@@ -8,6 +8,7 @@ public class Player : MonoBehaviour, IVelocity
     public event EventHandler OnPlayerDeath;
 
     [SerializeField] float moveSpeed;
+    public float MoveSpeed => moveSpeed;
     Vector3 moveVector;
 
     [SerializeField] float upperBound;
@@ -17,7 +18,10 @@ public class Player : MonoBehaviour, IVelocity
     Vector3 boundedPosition;
 
     [SerializeField] Transform firePosition;
-    [SerializeField] GameObject pfProjectile;
+    [SerializeField] GameObject pfStartingProjectile;
+
+    public GameObject CurrentProjectile => currentProjectile;
+    GameObject currentProjectile;
 
     //Cooldown System
     [SerializeField] float fireRate;
@@ -31,6 +35,7 @@ public class Player : MonoBehaviour, IVelocity
     private void Start()
     {
         projectileCount = projectileCapacity;
+        SetProjectile(pfStartingProjectile);
     }
     public void SetVelocity(Vector3 moveVector)
     {
@@ -45,6 +50,22 @@ public class Player : MonoBehaviour, IVelocity
         FiringLogic();
        
     }
+
+    public void SetProjectile(GameObject projectile)
+    {
+        currentProjectile = projectile;
+    }
+
+    public void SetMoveSpeed(float moveSpeed)
+    {
+        this.moveSpeed = moveSpeed;
+    }
+
+    public void AddMoveSpeed(float speed)
+    {
+        this.moveSpeed += speed;
+    }
+
 
     private void MovementLogic()
     {
@@ -64,7 +85,7 @@ public class Player : MonoBehaviour, IVelocity
 
         if(Input.GetKeyDown(KeyCode.Space) && cooldownTimer <= 0 && projectileCount > 0)
         {
-            Instantiate(pfProjectile, firePosition.position, Quaternion.identity);
+            Instantiate(currentProjectile, firePosition.position, Quaternion.identity);
 
             projectileCount--;
             cooldownTimer = fireRate;
