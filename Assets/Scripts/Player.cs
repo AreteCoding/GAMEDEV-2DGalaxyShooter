@@ -19,6 +19,7 @@ public class Player : MonoBehaviour, IVelocity
 
     [SerializeField] Transform firePosition;
     [SerializeField] GameObject pfStartingProjectile;
+    GameObject shield;
 
     public GameObject CurrentProjectile => currentProjectile;
     GameObject currentProjectile;
@@ -32,6 +33,11 @@ public class Player : MonoBehaviour, IVelocity
     int projectileCount;
 
     [SerializeField] int playerLives = 3;
+
+    private void Awake()
+    {
+        shield = transform.Find("shield").gameObject;
+    }
     private void Start()
     {
         projectileCount = projectileCapacity;
@@ -59,6 +65,21 @@ public class Player : MonoBehaviour, IVelocity
     public void SetMoveSpeed(float moveSpeed)
     {
         this.moveSpeed = moveSpeed;
+    }
+
+    public void SetShield(GameObject shield)
+    {
+        this.shield = shield;
+    }
+
+    void ActivateShield()
+    {
+        shield.SetActive(true);
+    }
+
+    void DeactivateShield()
+    {
+        shield.SetActive(false);
     }
 
     public void AddMoveSpeed(float speed)

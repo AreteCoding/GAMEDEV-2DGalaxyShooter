@@ -5,8 +5,12 @@ using System;
 
 public class SpawnManager : MonoBehaviour
 {
+    public event EventHandler<OnEnemySpawnedEventArgs> OnEnemySpawned;
+
+    [SerializeField] List<GameObject> powerupList;
     [SerializeField] GameObject pfPowerupVisual;
     [SerializeField] GameObject pfEnemy;
+
     Transform enemyContainer;
 
     bool isPlayerAlive;
@@ -37,9 +41,13 @@ public class SpawnManager : MonoBehaviour
     {
         while(isPlayerAlive)
         {
-            Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(-10.5f, 10.5f), 6, 0);
+            Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(-15f, 15f), 10.5f, 0);
             GameObject newEnemy = Instantiate(pfEnemy, spawnPosition, Quaternion.identity);
             newEnemy.transform.parent = enemyContainer;
+
+            Enemy enemy = newEnemy.GetComponent<Enemy>();
+            OnEnemySpawned?.Invoke(this, new OnEnemySpawnedEventArgs { enemy = enemy });
+
             yield return new WaitForSeconds(2.5f);
         }
 
@@ -51,7 +59,9 @@ public class SpawnManager : MonoBehaviour
         while (isPlayerAlive)
         {
             Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(-10.5f, 10.5f), 6, 0);
-            GameObject newPowerup = Instantiate(pfEnemy, spawnPosition, Quaternion.identity);
+
+            int randomIndex = UnityEngine.Random.Range(0, powerupList.Count);
+            GameObject newPowerup = Instantiate(powerupList[randomIndex], spawnPosition, Quaternion.identity);
             yield return new WaitForSeconds(UnityEngine.Random.Range(8, 15));
         }
 
@@ -62,4 +72,9 @@ public class SpawnManager : MonoBehaviour
     {
         isPlayerAlive = false;
     }
+}
+
+public class OnEnemySpawnedEventArgs : EventArgs
+{
+    public Enemy enemy;
 }

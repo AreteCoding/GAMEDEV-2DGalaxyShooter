@@ -1,9 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Enemy : MonoBehaviour
 {
+
+    public event EventHandler OnEnemyDeath;
+
+    [SerializeField] int scorePoints = 5;
+    public int ScorePoints => scorePoints;
+
     [SerializeField] float moveSpeed = 5f;
 
     [SerializeField] GameObject pfProjectile;
@@ -26,7 +33,7 @@ public class Enemy : MonoBehaviour
 
         if(transform.position.y < yMovementThreshhold)
         {
-            float xSpawnPosition = Random.Range(-3f, 3f);
+            float xSpawnPosition = UnityEngine.Random.Range(-3f, 3f);
 
             transform.position = new Vector3(xSpawnPosition, yRespawnHeight, 0);
         }
@@ -39,7 +46,7 @@ public class Enemy : MonoBehaviour
         if(firingTimer <= 0)
         {
             Instantiate(pfProjectile, transform.position, Quaternion.identity);
-            firingTimer = fireRate + Random.Range(-fireRateVariation, fireRateVariation);
+            firingTimer = fireRate + UnityEngine.Random.Range(-fireRateVariation, fireRateVariation);
         }
     }
 
@@ -61,7 +68,15 @@ public class Enemy : MonoBehaviour
         if(other.CompareTag("PlayerProjectile"))
         {
             Destroy(other.gameObject);
-            Destroy(this.gameObject);
+            DeathLogic();        
         }
     }
+
+    void DeathLogic()
+    {
+        OnEnemyDeath?.Invoke(this, EventArgs.Empty);
+
+        Destroy(this.gameObject);
+    }
 }
+
