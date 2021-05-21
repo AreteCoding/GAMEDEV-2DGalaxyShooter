@@ -19,7 +19,11 @@ public class Player : MonoBehaviour, IVelocity
 
     [SerializeField] Transform firePosition;
     [SerializeField] GameObject pfStartingProjectile;
+    [SerializeField] GameObject leftEngineDamaged;
+    [SerializeField] GameObject rightEngineDamaged;
     GameObject shield;
+
+    Animator animator;
 
     public GameObject CurrentProjectile => currentProjectile;
     GameObject currentProjectile;
@@ -33,15 +37,21 @@ public class Player : MonoBehaviour, IVelocity
     int projectileCount;
 
     [SerializeField] int playerLives = 3;
+    public int PlayerLives => playerLives;
 
     private void Awake()
     {
         shield = transform.Find("shield").gameObject;
+        animator = GetComponent<Animator>();
+
+        leftEngineDamaged.SetActive(false);
+        rightEngineDamaged.SetActive(false);
     }
     private void Start()
     {
         projectileCount = projectileCapacity;
         SetProjectile(pfStartingProjectile);
+
     }
     public void SetVelocity(Vector3 moveVector)
     {
@@ -101,19 +111,6 @@ public class Player : MonoBehaviour, IVelocity
         transform.position = boundedPosition;
     }
 
-    private void FiringLogic()
-    {
-
-        if(Input.GetKeyDown(KeyCode.Space) && cooldownTimer <= 0 && projectileCount > 0)
-        {
-            Instantiate(currentProjectile, firePosition.position, Quaternion.identity);
-
-            projectileCount--;
-            cooldownTimer = fireRate;
-            reloadTimer = reloadRate;
-        }
-    }
-
     private void CooldownLogic()
     {
         cooldownTimer -= Time.deltaTime;
@@ -130,14 +127,37 @@ public class Player : MonoBehaviour, IVelocity
         }
     }
 
+    private void FiringLogic()
+    {
+
+        if (Input.GetKeyDown(KeyCode.Space) && cooldownTimer <= 0 && projectileCount > 0)
+        {
+            Instantiate(currentProjectile, firePosition.position, Quaternion.identity);
+
+            projectileCount--;
+            cooldownTimer = fireRate;
+        }
+    }
+
     public void Damage()
     {
         playerLives--;
+        OnPlayerDeath?.Invoke(this, EventArgs.Empty);
 
-        if(playerLives < 1)
+        if(playerLives == 2)
         {
-            Destroy(this.gameObject);
-            OnPlayerDeath?.Invoke(this, EventArgs.Empty);
+            leftEngineDamaged.SetActive(true);
+        }
+
+        if (playerLives == 1)
+        {
+            rightEngineDamaged.SetActive(true);
+        }
+
+        if (playerLives < 1)
+        {
+          //  animator.SetTrigger("OnPlayerDeath");
+            Destroy(this.gameObject);           
         }
     }
 }

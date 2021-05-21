@@ -21,6 +21,13 @@ public class Enemy : MonoBehaviour
     
     [SerializeField] float yMovementThreshhold;
     [SerializeField] float yRespawnHeight;
+
+    Animator animator;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
     void Update()
     {
         MovementLogic();
@@ -61,21 +68,24 @@ public class Enemy : MonoBehaviour
                 player.Damage();
             }
 
-            Destroy(other.gameObject);
-            Destroy(this.gameObject);
+            StartCoroutine(DeathRoutine());
         }
 
         if(other.CompareTag("PlayerProjectile"))
         {
             Destroy(other.gameObject);
-            DeathLogic();        
+            StartCoroutine(DeathRoutine());
+               
         }
     }
 
-    void DeathLogic()
+    IEnumerator DeathRoutine()
     {
+        //gameObject.GetComponent<BoxCollider2D>();
+        moveSpeed = 0;
         OnEnemyDeath?.Invoke(this, EventArgs.Empty);
-
+        animator.SetTrigger("OnEnemyDeath");
+        yield return new WaitForSeconds(2.75f);
         Destroy(this.gameObject);
     }
 }

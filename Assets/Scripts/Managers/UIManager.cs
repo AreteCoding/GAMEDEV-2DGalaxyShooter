@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     TextMeshProUGUI scoreText;
 
     ScoreManager scoreManager;
+    LivesManager livesManager;
 
     private void Start()
     {
