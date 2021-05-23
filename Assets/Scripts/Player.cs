@@ -6,6 +6,7 @@ using System;
 public class Player : MonoBehaviour, IVelocity
 {
     public event EventHandler OnPlayerDeath;
+    public event EventHandler OnPlayerFired;
 
     [SerializeField] float moveSpeed;
     public float MoveSpeed => moveSpeed;
@@ -133,6 +134,7 @@ public class Player : MonoBehaviour, IVelocity
         if (Input.GetKeyDown(KeyCode.Space) && cooldownTimer <= 0 && projectileCount > 0)
         {
             Instantiate(currentProjectile, firePosition.position, Quaternion.identity);
+            OnPlayerFired?.Invoke(this, EventArgs.Empty);
 
             projectileCount--;
             cooldownTimer = fireRate;

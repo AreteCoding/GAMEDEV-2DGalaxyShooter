@@ -23,10 +23,12 @@ public class Enemy : MonoBehaviour
     [SerializeField] float yRespawnHeight;
 
     Animator animator;
+    AudioSource audioSource;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
     void Update()
     {
@@ -81,9 +83,14 @@ public class Enemy : MonoBehaviour
 
     IEnumerator DeathRoutine()
     {
-        //gameObject.GetComponent<BoxCollider2D>();
+        gameObject.GetComponent<BoxCollider2D>().enabled = false;
+
         moveSpeed = 0;
+        firingTimer = Mathf.Infinity;
+
+
         OnEnemyDeath?.Invoke(this, EventArgs.Empty);
+        audioSource.Play();
         animator.SetTrigger("OnEnemyDeath");
         yield return new WaitForSeconds(2.75f);
         Destroy(this.gameObject);

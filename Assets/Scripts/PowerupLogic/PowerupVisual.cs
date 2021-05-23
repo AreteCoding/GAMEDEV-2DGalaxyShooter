@@ -7,6 +7,7 @@ public class PowerupVisual : MonoBehaviour
     [SerializeField] float moveSpeed = 3;
     [SerializeField] float timeToLive = 2f;
     [SerializeField] GameObject pfPowerup;
+    [SerializeField] AudioClip audioClip;
 
     private void Start()
     {
@@ -28,6 +29,8 @@ public class PowerupVisual : MonoBehaviour
                 GameObject newPowerup = Instantiate(pfPowerup);
                 //  newPowerup.GetComponent<PowerupTripleShot>().SetPlayer(player);     
                 newPowerup.GetComponent<IPowerup>().SetPlayer(player);
+
+                AudioSource.PlayClipAtPoint(audioClip, transform.position);
             }
 
             Destroy(gameObject);

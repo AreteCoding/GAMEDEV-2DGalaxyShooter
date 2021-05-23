@@ -18,16 +18,24 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if(isPlayerDead && Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
+        if (!isPlayerDead) { return; }
+
+        if(Input.GetKeyDown(KeyCode.R))
         {
             isPlayerDead = false;
             SceneManager.LoadScene("GameScene");
         }
 
-        if(isPlayerDead && Input.GetKeyDown(KeyCode.M))
+        if(Input.GetKeyDown(KeyCode.M))
         {
             SceneManager.LoadScene("MainMenuScene");
         }
+
     }
 
     void Player_OnPlayerDeath(object sender, EventArgs e)

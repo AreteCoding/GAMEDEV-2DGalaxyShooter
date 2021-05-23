@@ -46,6 +46,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -167,3 +168,4 @@ MonoBehaviour:
   moveSpeed: 3
   timeToLive: 10
   pfPowerup: {fileID: 8983583897265588956, guid: 2599e70f6630bb840be5aa7a52bcfc31, type: 3}
+  audioClip: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
