@@ -8,9 +8,15 @@ public class Player : MonoBehaviour, IVelocity
     public event EventHandler OnPlayerDeath;
     public event EventHandler OnPlayerFired;
 
-    [SerializeField] float moveSpeed;
-    public float MoveSpeed => moveSpeed;
-    Vector3 moveVector;
+    [SerializeField] float baseMoveSpeed;
+    [SerializeField] float thrustMultiplier = .2f;
+    float thrustSpeed;
+    [SerializeField] float thrustAmountMax = 7f;
+    float currentThrustAmount;
+    float moveSpeedMultiplier = 0;  // tracks speed from powerups
+    float currentMoveSpeed;
+
+    Vector3 moveVector; //obtained from the IVelocity component
 
     [SerializeField] float upperBound;
     [SerializeField] float lowerBound;
@@ -47,6 +53,9 @@ public class Player : MonoBehaviour, IVelocity
 
         leftEngineDamaged.SetActive(false);
         rightEngineDamaged.SetActive(false);
+
+        currentThrustAmount = thrustAmountMax;
+        thrustSpeed = baseMoveSpeed + (baseMoveSpeed * thrustMultiplier);
     }
     private void Start()
     {
@@ -75,7 +84,7 @@ public class Player : MonoBehaviour, IVelocity
 
     public void SetMoveSpeed(float moveSpeed)
     {
-        this.moveSpeed = moveSpeed;
+        currentMoveSpeed = moveSpeed;
     }
 
     public void SetShield(GameObject shield)
@@ -93,15 +102,28 @@ public class Player : MonoBehaviour, IVelocity
         shield.SetActive(false);
     }
 
-    public void AddMoveSpeed(float speed)
+    public void AddMoveSpeedMultiplier(float speed)
     {
-        this.moveSpeed += speed;
+        moveSpeedMultiplier += speed;
     }
 
 
     private void MovementLogic()
     {
-        transform.position += moveVector * moveSpeed * Time.deltaTime;
+
+        transform.position += moveVector * currentMoveSpeed * Time.deltaTime;
+
+        if (Input.GetKey(KeyCode.LeftShift) && thrustAmountMax > 0)
+        {
+            currentMoveSpeed = thrustSpeed + moveSpeedMultiplier;
+            Mathf.Clamp(currentThrustAmount -= Time.deltaTime, 0, thrustAmountMax);
+            
+        }
+        else 
+        {
+            currentMoveSpeed = baseMoveSpeed + moveSpeedMultiplier;        
+        }
+
         CheckBounds();
     }
 
@@ -144,7 +166,6 @@ public class Player : MonoBehaviour, IVelocity
     public void Damage()
     {
         playerLives--;
-        OnPlayerDeath?.Invoke(this, EventArgs.Empty);
 
         if(playerLives == 2)
         {
@@ -158,7 +179,8 @@ public class Player : MonoBehaviour, IVelocity
 
         if (playerLives < 1)
         {
-          //  animator.SetTrigger("OnPlayerDeath");
+            //  animator.SetTrigger("OnPlayerDeath");
+            OnPlayerDeath?.Invoke(this, EventArgs.Empty);
             Destroy(this.gameObject);           
         }
     }

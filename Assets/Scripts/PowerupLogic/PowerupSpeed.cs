@@ -7,7 +7,6 @@ public class PowerupSpeed : MonoBehaviour, IPowerup
     Player player;
     [SerializeField] float powerupMoveSpeed;
     [SerializeField] float speedMultiplier;
-    float addedSpeed;
 
     [SerializeField] float powerupDuration;
 
@@ -15,15 +14,14 @@ public class PowerupSpeed : MonoBehaviour, IPowerup
     {
         this.player = player;
 
-        addedSpeed = player.MoveSpeed * speedMultiplier;
-        player.AddMoveSpeed(addedSpeed);
+        player.AddMoveSpeedMultiplier(speedMultiplier);
         StartCoroutine(PowerdownRoutine());
     }
 
     IEnumerator PowerdownRoutine()
     {
         yield return new WaitForSeconds(powerupDuration);
-        player.AddMoveSpeed(-addedSpeed);
+        player.AddMoveSpeedMultiplier(-speedMultiplier);
         Destroy(gameObject);
     }
 }
