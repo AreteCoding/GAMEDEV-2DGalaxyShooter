@@ -10,7 +10,6 @@ public class AmmoUI : MonoBehaviour
     TextMeshProUGUI ammoText;
     Player player;
 
-
     private void Awake()
     {
         ammoText = GetComponentInChildren<TextMeshProUGUI>();
@@ -21,6 +20,8 @@ public class AmmoUI : MonoBehaviour
         player = FindObjectOfType<Player>();
 
         player.OnPlayerFired += Player_OnPlayerFired;
+        player.OnPlayerReloaded += Player_OnPlayerFired;
+
         ammoText.text = player.ProjectileCount.ToString();
     }
 

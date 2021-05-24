@@ -166,6 +166,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
-  timeToLive: 10
+  timeToLive: 15
   pfPowerup: {fileID: 8983583897265588956, guid: 2599e70f6630bb840be5aa7a52bcfc31, type: 3}
   audioClip: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}

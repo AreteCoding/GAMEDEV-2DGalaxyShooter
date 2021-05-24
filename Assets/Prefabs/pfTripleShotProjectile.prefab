@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9095208023626856238}
   m_Layer: 0
-  m_Name: TripleShot
+  m_Name: pfTripleShotProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

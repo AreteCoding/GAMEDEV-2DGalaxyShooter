@@ -8,7 +8,9 @@ public class Player : MonoBehaviour, IVelocity, IDamage
     public event EventHandler OnPlayerDamaged;
     public event EventHandler OnPlayerDeath;
     public event EventHandler OnPlayerFired;
+    public event EventHandler OnPlayerReloaded;
 
+    #region Movement Variables
     [SerializeField] float baseMoveSpeed;
     [SerializeField] float thrustMultiplier = .2f;
     float thrustSpeed;
@@ -24,29 +26,34 @@ public class Player : MonoBehaviour, IVelocity, IDamage
     [SerializeField] float leftBound;
     [SerializeField] float rightBound;
     Vector3 boundedPosition;
+    #endregion
+
+    #region Firing/Ammo Variables
 
     [SerializeField] Transform firePosition;
     [SerializeField] GameObject pfStartingProjectile;
-    [SerializeField] GameObject leftEngineDamaged;
-    [SerializeField] GameObject rightEngineDamaged;
-
-    Animator animator;
-
     public GameObject CurrentProjectile => currentProjectile;
     GameObject currentProjectile;
 
-    //Cooldown System
     [SerializeField] float fireRate;
     float cooldownTimer;
     [SerializeField] float reloadRate;  // should be slower than fireRate
     float reloadTimer;
+
+    public int ProjectileCapacity => projectileCapacity;
     [SerializeField] int projectileCapacity;
-    int projectileCount;
+
     public int ProjectileCount => projectileCount;
+    int projectileCount;
+    #endregion
 
-    [SerializeField] int playerLives = 3;
+    [SerializeField] GameObject leftEngineDamaged;
+    [SerializeField] GameObject rightEngineDamaged;
+
     public int PlayerLives => playerLives;
+    [SerializeField] int playerLives = 3;
 
+    Animator animator;
     private void Awake()
     {
 
@@ -60,16 +67,10 @@ public class Player : MonoBehaviour, IVelocity, IDamage
         thrustSpeed = baseMoveSpeed + (baseMoveSpeed * thrustMultiplier);
     }
     private void Start()
-    {
-      
+    {  
         SetProjectile(pfStartingProjectile);
-
     }
-    public void SetVelocity(Vector3 moveVector)
-    {
-        this.moveVector = moveVector;
-    }
-
+  
     void Update()
     {
         MovementLogic();
@@ -77,7 +78,10 @@ public class Player : MonoBehaviour, IVelocity, IDamage
         CooldownLogic();    
         FiringLogic();     
     }
-
+    public void SetVelocity(Vector3 moveVector)
+    {
+        this.moveVector = moveVector;
+    }
     public void SetProjectile(GameObject projectile)
     {
         currentProjectile = projectile;
@@ -93,6 +97,11 @@ public class Player : MonoBehaviour, IVelocity, IDamage
         moveSpeedMultiplier += speed;
     }
 
+    public void AddAmmo(int amount)
+    {
+        projectileCount = Mathf.Clamp(projectileCount += amount, 0, projectileCapacity);
+        OnPlayerReloaded?.Invoke(this, EventArgs.Empty);
+    }
 
     private void MovementLogic()
     {
