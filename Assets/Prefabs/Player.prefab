@@ -347,7 +347,7 @@ MonoBehaviour:
   rightEngineDamaged: {fileID: 1897449531}
   fireRate: 0.3
   reloadRate: 0.4
-  projectileCapacity: 5
+  projectileCapacity: 15
   playerLives: 3
 --- !u!114 &4333396727568834862
 MonoBehaviour:

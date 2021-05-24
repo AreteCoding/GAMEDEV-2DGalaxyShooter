@@ -42,6 +42,7 @@ public class Player : MonoBehaviour, IVelocity, IDamage
     float reloadTimer;
     [SerializeField] int projectileCapacity;
     int projectileCount;
+    public int ProjectileCount => projectileCount;
 
     [SerializeField] int playerLives = 3;
     public int PlayerLives => playerLives;
@@ -54,12 +55,13 @@ public class Player : MonoBehaviour, IVelocity, IDamage
         leftEngineDamaged.SetActive(false);
         rightEngineDamaged.SetActive(false);
 
+        projectileCount = projectileCapacity;
         currentThrustAmount = thrustAmountMax;
         thrustSpeed = baseMoveSpeed + (baseMoveSpeed * thrustMultiplier);
     }
     private void Start()
     {
-        projectileCount = projectileCapacity;
+      
         SetProjectile(pfStartingProjectile);
 
     }
@@ -71,10 +73,9 @@ public class Player : MonoBehaviour, IVelocity, IDamage
     void Update()
     {
         MovementLogic();
-        ReloadLogic();
+        // ReloadLogic();
         CooldownLogic();    
-        FiringLogic();
-       
+        FiringLogic();     
     }
 
     public void SetProjectile(GameObject projectile)
@@ -141,9 +142,9 @@ public class Player : MonoBehaviour, IVelocity, IDamage
         if (Input.GetKeyDown(KeyCode.Space) && cooldownTimer <= 0 && projectileCount > 0)
         {
             Instantiate(currentProjectile, firePosition.position, Quaternion.identity);
-            OnPlayerFired?.Invoke(this, EventArgs.Empty);
-
+            
             projectileCount--;
+            OnPlayerFired?.Invoke(this, EventArgs.Empty);
             cooldownTimer = fireRate;
         }
     }
