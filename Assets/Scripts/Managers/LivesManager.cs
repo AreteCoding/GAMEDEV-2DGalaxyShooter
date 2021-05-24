@@ -17,17 +17,17 @@ public class LivesManager : MonoBehaviour
     private void Start()
     {
         Canvas uiCanvas = FindObjectOfType<Canvas>();
-        livesImage = uiCanvas.transform.Find("livesImg").GetComponent<Image>();
+        livesImage = uiCanvas.transform.Find("LivesVisual").GetComponent<Image>();
         gameOverText.gameObject.SetActive(false);
         restartGameText.gameObject.SetActive(false);
 
         player  = FindObjectOfType<Player>();
-        player.OnPlayerDeath += Player_OnPlayerDeath;
+        player.OnPlayerDamaged += Player_OnPlayerDamaged;
 
         livesImage.sprite = livesSprites[player.PlayerLives];
     }
 
-    void Player_OnPlayerDeath(object sender, EventArgs e)
+    void Player_OnPlayerDamaged(object sender, EventArgs e)
     {
 
         livesImage.sprite = livesSprites[player.PlayerLives];

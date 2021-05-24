@@ -63,11 +63,11 @@ public class Enemy : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            Player player = other.transform.GetComponent<Player>();
+            IDamage damageable = other.transform.GetComponent<Player>();
 
-            if (player)
+            if (damageable != null)
             {
-                player.Damage();
+                damageable.Damage();
             }
 
             StartCoroutine(DeathRoutine());
@@ -84,10 +84,8 @@ public class Enemy : MonoBehaviour
     IEnumerator DeathRoutine()
     {
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
-
         moveSpeed = 0;
         firingTimer = Mathf.Infinity;
-
 
         OnEnemyDeath?.Invoke(this, EventArgs.Empty);
         audioSource.Play();

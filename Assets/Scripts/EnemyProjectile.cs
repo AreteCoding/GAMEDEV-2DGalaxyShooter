@@ -21,11 +21,11 @@ public class EnemyProjectile : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Player player = other.transform.GetComponent<Player>();
+            IDamage damageable = other.transform.GetComponent<IDamage>();
 
-            if (player)
+            if (damageable != null)
             {
-                player.Damage();
+                damageable.Damage();
             }
           
             Destroy(this.gameObject);

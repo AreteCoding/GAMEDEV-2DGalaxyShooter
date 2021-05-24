@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Player : MonoBehaviour, IVelocity
+public class Player : MonoBehaviour, IVelocity, IDamage
 {
+    public event EventHandler OnPlayerDamaged;
     public event EventHandler OnPlayerDeath;
     public event EventHandler OnPlayerFired;
 
@@ -28,7 +29,6 @@ public class Player : MonoBehaviour, IVelocity
     [SerializeField] GameObject pfStartingProjectile;
     [SerializeField] GameObject leftEngineDamaged;
     [SerializeField] GameObject rightEngineDamaged;
-    GameObject shield;
 
     Animator animator;
 
@@ -48,7 +48,7 @@ public class Player : MonoBehaviour, IVelocity
 
     private void Awake()
     {
-        shield = transform.Find("shield").gameObject;
+
         animator = GetComponent<Animator>();
 
         leftEngineDamaged.SetActive(false);
@@ -85,21 +85,6 @@ public class Player : MonoBehaviour, IVelocity
     public void SetMoveSpeed(float moveSpeed)
     {
         currentMoveSpeed = moveSpeed;
-    }
-
-    public void SetShield(GameObject shield)
-    {
-        this.shield = shield;
-    }
-
-    void ActivateShield()
-    {
-        shield.SetActive(true);
-    }
-
-    void DeactivateShield()
-    {
-        shield.SetActive(false);
     }
 
     public void AddMoveSpeedMultiplier(float speed)
@@ -166,6 +151,7 @@ public class Player : MonoBehaviour, IVelocity
     public void Damage()
     {
         playerLives--;
+        OnPlayerDamaged?.Invoke(this, EventArgs.Empty);
 
         if(playerLives == 2)
         {

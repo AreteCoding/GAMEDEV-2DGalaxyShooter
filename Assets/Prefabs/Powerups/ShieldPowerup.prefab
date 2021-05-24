@@ -9,10 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8634699860809373220}
+  - component: {fileID: -5487401815903017965}
   - component: {fileID: 4218389402318983787}
   m_Layer: 0
   m_Name: ShieldPowerup
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31,6 +32,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &-5487401815903017965
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8983583897265588956}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.025415778, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.4109672
 --- !u!114 &4218389402318983787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44,4 +61,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pfShield: {fileID: 1297430441163530230, guid: 6b087f56fe35b724b9357822a3ac7280, type: 3}
-  powerupDuration: 8
+  shieldAmountMax: 3

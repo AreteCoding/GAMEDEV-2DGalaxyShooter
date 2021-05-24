@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     ScoreManager scoreManager;
     LivesManager livesManager;
 
+
     private void Start()
     {
         uiCanvas = FindObjectOfType<Canvas>();
@@ -22,10 +23,22 @@ public class UIManager : MonoBehaviour
         scoreManager = FindObjectOfType<ScoreManager>();
         scoreManager.OnScoreUpdated += ScoreManager_OnScoreUpdated;
     }
-   
+
+    public void SetShield(PowerupShield shield)
+    {
+        shield.OnShieldDamaged += PowerupShield_OnShieldDamaged;
+    }
+
     void ScoreManager_OnScoreUpdated(object sender, EventArgs e)
     {
         scoreText.text = scoreManager.PlayerScore.ToString();
+    }
+
+    void PowerupShield_OnShieldDamaged(object sender, EventArgs e)
+    {
+        PowerupShield shield = sender as PowerupShield;
+
+        int currentShield = shield.CurrentShieldAmount;
     }
 
 }
