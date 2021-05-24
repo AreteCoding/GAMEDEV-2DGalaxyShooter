@@ -10,15 +10,18 @@ public class Player : MonoBehaviour, IVelocity, IDamage
     public event EventHandler OnPlayerDied;
     public event EventHandler OnPlayerFired;
     public event EventHandler OnPlayerReloaded;
+    public event EventHandler OnThrustersUsed;
 
     #region Movement Variables
-    [SerializeField] float baseMoveSpeed;
-    [SerializeField] float thrustMultiplier = .2f;
-    float thrustSpeed;
-    [SerializeField] float thrustAmountMax = 7f;
-    float currentThrustAmount;
+
+    [SerializeField] float baseMoveSpeed;   
     float moveSpeedMultiplier = 0;  // tracks speed from powerups
     float currentMoveSpeed;
+
+    [SerializeField] float thrustMultiplier = .2f;
+    [SerializeField] float thrustAmountMax = 7f;
+    float currentThrustAmount;
+    float thrustSpeed;
 
     Vector3 moveVector; //obtained from the IVelocity component
 
@@ -110,6 +113,11 @@ public class Player : MonoBehaviour, IVelocity, IDamage
         OnPlayerHealed?.Invoke(this, EventArgs.Empty);
     }
 
+    public float GetThrusterAmount()
+    {
+        return currentThrustAmount/thrustAmountMax;
+    }
+
     private void MovementLogic()
     {
 
@@ -119,6 +127,7 @@ public class Player : MonoBehaviour, IVelocity, IDamage
         {
             currentMoveSpeed = thrustSpeed + moveSpeedMultiplier;
             Mathf.Clamp(currentThrustAmount -= Time.deltaTime, 0, thrustAmountMax);
+            OnThrustersUsed?.Invoke(this, EventArgs.Empty);
             
         }
         else 
