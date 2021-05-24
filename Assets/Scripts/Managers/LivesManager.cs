@@ -23,6 +23,7 @@ public class LivesManager : MonoBehaviour
 
         player  = FindObjectOfType<Player>();
         player.OnPlayerDamaged += Player_OnPlayerDamaged;
+        player.OnPlayerHealed += Player_OnPlayerDamaged;
 
         livesImage.sprite = livesSprites[player.PlayerLives];
     }

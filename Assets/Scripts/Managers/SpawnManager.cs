@@ -8,7 +8,6 @@ public class SpawnManager : MonoBehaviour
     public event EventHandler<OnEnemySpawnedEventArgs> OnEnemySpawned;
 
     [SerializeField] List<GameObject> powerupList;
-    [SerializeField] GameObject pfPowerupVisual;
     [SerializeField] GameObject pfEnemy;
 
     Transform enemyContainer;
@@ -22,7 +21,7 @@ public class SpawnManager : MonoBehaviour
         if(player != null)
         {
             isPlayerAlive = true;
-            player.OnPlayerDeath += Player_OnPlayerDeath;
+            player.OnPlayerDied += Player_OnPlayerDeath;
         }
        
         enemyContainer = transform.Find("EnemyContainer");

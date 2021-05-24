@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         player = FindObjectOfType<Player>();
-        player.OnPlayerDeath += Player_OnPlayerDeath;
+        player.OnPlayerDied += Player_OnPlayerDeath;
     }
 
     private void Update()

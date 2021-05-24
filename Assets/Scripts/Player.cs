@@ -6,7 +6,8 @@ using System;
 public class Player : MonoBehaviour, IVelocity, IDamage
 {
     public event EventHandler OnPlayerDamaged;
-    public event EventHandler OnPlayerDeath;
+    public event EventHandler OnPlayerHealed;
+    public event EventHandler OnPlayerDied;
     public event EventHandler OnPlayerFired;
     public event EventHandler OnPlayerReloaded;
 
@@ -103,6 +104,12 @@ public class Player : MonoBehaviour, IVelocity, IDamage
         OnPlayerReloaded?.Invoke(this, EventArgs.Empty);
     }
 
+    public void AddHealth(int amount)
+    {
+        playerLives += amount;
+        OnPlayerHealed?.Invoke(this, EventArgs.Empty);
+    }
+
     private void MovementLogic()
     {
 
@@ -176,7 +183,7 @@ public class Player : MonoBehaviour, IVelocity, IDamage
         if (playerLives < 1)
         {
             //  animator.SetTrigger("OnPlayerDeath");
-            OnPlayerDeath?.Invoke(this, EventArgs.Empty);
+            OnPlayerDied?.Invoke(this, EventArgs.Empty);
             Destroy(this.gameObject);           
         }
     }
