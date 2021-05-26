@@ -30,7 +30,7 @@ public class LivesManager : MonoBehaviour
 
     void Player_OnPlayerDamaged(object sender, EventArgs e)
     {
-
+       
         livesImage.sprite = livesSprites[player.PlayerLives];
         if(player.PlayerLives == 0)
         {

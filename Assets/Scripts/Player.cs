@@ -109,7 +109,7 @@ public class Player : MonoBehaviour, IVelocity, IDamage
 
     public void AddHealth(int amount)
     {
-        playerLives += amount;
+        playerLives = Mathf.Clamp(playerLives + amount, 0, 3);
         OnPlayerHealed?.Invoke(this, EventArgs.Empty);
     }
 

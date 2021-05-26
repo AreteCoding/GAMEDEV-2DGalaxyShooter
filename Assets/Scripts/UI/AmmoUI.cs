@@ -22,11 +22,11 @@ public class AmmoUI : MonoBehaviour
         player.OnPlayerFired += Player_OnPlayerFired;
         player.OnPlayerReloaded += Player_OnPlayerFired;
 
-        ammoText.text = player.ProjectileCount.ToString();
+        ammoText.text = player.ProjectileCount.ToString() + "/" + player.ProjectileCapacity.ToString();
     }
 
     void Player_OnPlayerFired(object sender, EventArgs e)
     {
-        ammoText.text = player.ProjectileCount.ToString();
+        ammoText.text = player.ProjectileCount.ToString() + "/" + player.ProjectileCapacity.ToString();
     }
 }
