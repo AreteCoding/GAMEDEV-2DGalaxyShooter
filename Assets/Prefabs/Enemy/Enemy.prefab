@@ -171,6 +171,7 @@ MonoBehaviour:
   pfProjectile: {fileID: 7702690687925896506, guid: 02458f83c417dcc48b2b7d146ff8a754, type: 3}
   fireRate: 2
   fireRateVariation: 0.5
+  movement: {fileID: 11400000, guid: 1065cd04585310d49bb757e90a150374, type: 2}
   yMovementThreshhold: -10.5
   yRespawnHeight: 10.5
 --- !u!82 &4795420254205904115

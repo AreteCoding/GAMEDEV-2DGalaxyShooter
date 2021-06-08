@@ -12,15 +12,20 @@ public class Enemy : MonoBehaviour
     public int ScorePoints => scorePoints;
 
     [SerializeField] float moveSpeed = 5f;
+    public float MoveSpeed => moveSpeed;
 
     [SerializeField] GameObject pfProjectile;
 
     [SerializeField] float fireRate;
     [SerializeField] float fireRateVariation;
     float firingTimer;
-    
+
+
+    [SerializeField] EnemyMovement movement;
     [SerializeField] float yMovementThreshhold;
     [SerializeField] float yRespawnHeight;
+    public float YMovementThreshhold => yMovementThreshhold;
+    public float YRespawnHeight => yRespawnHeight;
 
     Animator animator;
     AudioSource audioSource;
@@ -30,22 +35,14 @@ public class Enemy : MonoBehaviour
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
     }
+
+    private void Start()
+    {
+        movement.Movement(this);
+    }
     void Update()
     {
-        MovementLogic();
         FiringLogic();
-    }
-
-    private void MovementLogic()
-    {
-        transform.position += Vector3.down * moveSpeed * Time.deltaTime;
-
-        if(transform.position.y < yMovementThreshhold)
-        {
-            float xSpawnPosition = UnityEngine.Random.Range(-3f, 3f);
-
-            transform.position = new Vector3(xSpawnPosition, yRespawnHeight, 0);
-        }
     }
 
     private void FiringLogic()
