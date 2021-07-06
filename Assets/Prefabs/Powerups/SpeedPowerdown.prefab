@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 772422371948063172}
   - component: {fileID: 1047296783417733717}
   m_Layer: 0
-  m_Name: SpeedPowerup
+  m_Name: SpeedPowerdown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,5 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43cb5120bcc71ab4ab058a17a1a977be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedAmount: 4
-  powerupDuration: 5
+  speedAmount: -3
+  powerupDuration: 8

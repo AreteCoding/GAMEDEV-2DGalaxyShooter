@@ -5,8 +5,7 @@ using UnityEngine;
 public class PowerupSpeed : MonoBehaviour, IPowerup
 {
     Player player;
-    [SerializeField] float powerupMoveSpeed;
-    [SerializeField] float speedMultiplier;
+    [SerializeField] float speedAmount;
 
     [SerializeField] float powerupDuration;
 
@@ -14,14 +13,14 @@ public class PowerupSpeed : MonoBehaviour, IPowerup
     {
         this.player = player;
 
-        player.AddMoveSpeedMultiplier(speedMultiplier);
+        player.AddMoveSpeedMultiplier(speedAmount);
         StartCoroutine(PowerdownRoutine());
     }
 
     IEnumerator PowerdownRoutine()
     {
         yield return new WaitForSeconds(powerupDuration);
-        player.AddMoveSpeedMultiplier(-speedMultiplier);
+        player.AddMoveSpeedMultiplier(-speedAmount);
         Destroy(gameObject);
     }
 }

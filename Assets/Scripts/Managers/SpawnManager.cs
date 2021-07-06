@@ -8,8 +8,6 @@ public class SpawnManager : MonoBehaviour
     public event EventHandler<OnEnemySpawnedEventArgs> OnEnemySpawned;
 
     [SerializeField] List<GameObject> powerupList;
-    [SerializeField] GameObject pfEnemy;
-
     [SerializeField] List<WaveData> waveDataList;
 
     Transform enemyContainer;
