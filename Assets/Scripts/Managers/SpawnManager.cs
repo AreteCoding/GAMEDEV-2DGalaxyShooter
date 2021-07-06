@@ -10,6 +10,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] List<GameObject> powerupList;
     [SerializeField] GameObject pfEnemy;
 
+    [SerializeField] List<WaveData> waveDataList;
+
     Transform enemyContainer;
 
     bool isPlayerAlive;
@@ -18,39 +20,49 @@ public class SpawnManager : MonoBehaviour
     {
         Player player = FindObjectOfType<Player>();
 
-        if(player != null)
+        if (player != null)
         {
             isPlayerAlive = true;
             player.OnPlayerDied += Player_OnPlayerDeath;
         }
-       
+
         enemyContainer = transform.Find("EnemyContainer");
-        if(enemyContainer != null)
+        if (enemyContainer != null)
         {
             StartCoroutine(SpawnEnemyRoutine());
         }
 
         StartCoroutine(SpawnPowerupRoutine());
-       
+
     }
 
 
 
     IEnumerator SpawnEnemyRoutine()
     {
-        while(isPlayerAlive)
+        yield return new WaitForSeconds(1f);
+
+        foreach (WaveData wave in waveDataList)
         {
-            Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(-15f, 15f), 10.5f, 0);
-            GameObject newEnemy = Instantiate(pfEnemy, spawnPosition, Quaternion.identity);
-            newEnemy.transform.parent = enemyContainer;
+            GameObject enemyPrefab = wave.GetEnemy();
 
-            Enemy enemy = newEnemy.GetComponent<Enemy>();
-            OnEnemySpawned?.Invoke(this, new OnEnemySpawnedEventArgs { enemy = enemy });
+            for (int i = 0; i < wave.GetEnemyTotal(); i++)
+            {
+               
+                EnemyMovement path = wave.GetEnemyMovementLogic();
+                GameObject enemyObject = Instantiate(enemyPrefab, wave.GetSpawnPoint().position, Quaternion.identity);
+                enemyObject.transform.parent = enemyContainer;
+               
+                Enemy enemy = enemyObject.GetComponent<Enemy>();
+                wave.GetEnemyMovementLogic().Movement(enemy);
+                OnEnemySpawned?.Invoke(this, new OnEnemySpawnedEventArgs { enemy = enemy });
 
-            yield return new WaitForSeconds(2.5f);
+                yield return new WaitForSeconds(wave.GetSpawnFrequency());
+            }
+
+            yield return new WaitForSeconds(wave.GetTimeToNextWave());
+
         }
-
-        yield return null;
     }
 
     IEnumerator SpawnPowerupRoutine()

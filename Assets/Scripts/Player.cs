@@ -123,7 +123,7 @@ public class Player : MonoBehaviour, IVelocity, IDamage
 
         transform.position += moveVector * currentMoveSpeed * Time.deltaTime;
 
-        if (Input.GetKey(KeyCode.LeftShift) && thrustAmountMax > 0)
+        if (Input.GetKey(KeyCode.LeftShift) && currentThrustAmount > 0)
         {
             currentMoveSpeed = thrustSpeed + moveSpeedMultiplier;
             Mathf.Clamp(currentThrustAmount -= Time.deltaTime, 0, thrustAmountMax);

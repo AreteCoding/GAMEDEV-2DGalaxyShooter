@@ -20,8 +20,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] float fireRateVariation;
     float firingTimer;
 
-
-    [SerializeField] EnemyMovement movement;
     [SerializeField] float yMovementThreshhold;
     [SerializeField] float yRespawnHeight;
     public float YMovementThreshhold => yMovementThreshhold;
@@ -29,6 +27,7 @@ public class Enemy : MonoBehaviour
 
     Animator animator;
     AudioSource audioSource;
+    List<Transform> pathNodes = new List<Transform>();
 
     private void Awake()
     {
@@ -38,7 +37,7 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        movement.Movement(this);
+  
     }
     void Update()
     {
