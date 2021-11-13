@@ -16,5 +16,5 @@ MonoBehaviour:
   pfEnemy: {fileID: 2322037776285537093, guid: 900de68aa34081b4988a780ce1b20707, type: 3}
   enemyTotal: 5
   spawnPoint: {fileID: 8510820940821055627, guid: ea0a8615169f7c047aeccae8049fc344, type: 3}
-  spawnFrequency: 0.3
+  spawnFrequency: 0.5
   timeToNextWave: 0

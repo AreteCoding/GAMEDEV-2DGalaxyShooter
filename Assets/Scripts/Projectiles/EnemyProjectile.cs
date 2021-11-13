@@ -5,16 +5,24 @@ using UnityEngine;
 public class EnemyProjectile : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 9;
-    [SerializeField] float timeToLive = 1;
+    [SerializeField] float timeToLive = 3;
+
+    Vector3 moveDirection;
     void Start()
     {
+        moveDirection = Vector3.down;
         Destroy(gameObject, timeToLive);
     }
 
    
     void Update()
     {
-        transform.position += Vector3.down * moveSpeed * Time.deltaTime;
+        transform.position += moveDirection * moveSpeed * Time.deltaTime;
+    }
+
+    public void Setup(Vector3 moveDirection)
+    {
+        this.moveDirection = moveDirection;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

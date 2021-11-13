@@ -47,12 +47,12 @@ public class SpawnManager : MonoBehaviour
             for (int i = 0; i < wave.GetEnemyTotal(); i++)
             {
                
-                EnemyMovement path = wave.GetEnemyMovementLogic();
+                //EnemyMovement path = wave.GetEnemyMovementLogic();
                 GameObject enemyObject = Instantiate(enemyPrefab, wave.GetSpawnPoint().position, Quaternion.identity);
                 enemyObject.transform.parent = enemyContainer;
                
                 Enemy enemy = enemyObject.GetComponent<Enemy>();
-                wave.GetEnemyMovementLogic().Movement(enemy);
+                wave.GetEnemyMovementLogic().Movement(enemy);   // places movement routine on enemy
                 OnEnemySpawned?.Invoke(this, new OnEnemySpawnedEventArgs { enemy = enemy });
 
                 yield return new WaitForSeconds(wave.GetSpawnFrequency());

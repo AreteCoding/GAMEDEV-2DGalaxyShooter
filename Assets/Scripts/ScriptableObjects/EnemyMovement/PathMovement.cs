@@ -25,7 +25,7 @@ public class PathMovement : EnemyMovement
 
             enemy.transform.position += moveDirection * enemy.MoveSpeed * Time.deltaTime;
 
-            if (Vector3.Distance(enemy.transform.position, pathNodes[nodeIndex].position) < .1)
+            if (Vector3.Distance(enemy.transform.position, pathNodes[nodeIndex].position) < .2)
             {
                 nodeIndex++;
 

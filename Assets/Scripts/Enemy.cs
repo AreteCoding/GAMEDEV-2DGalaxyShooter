@@ -27,7 +27,9 @@ public class Enemy : MonoBehaviour
 
     Animator animator;
     AudioSource audioSource;
-    List<Transform> pathNodes = new List<Transform>();
+    Vector3 targetDestination;
+    public Vector3 TargetDestination => targetDestination;
+
 
     private void Awake()
     {
@@ -41,18 +43,38 @@ public class Enemy : MonoBehaviour
     }
     void Update()
     {
-        FiringLogic();
+        ShootingLogic();
+      //  MovementLogic();
     }
 
-    private void FiringLogic()
+    private void ShootingLogic()
     {
         firingTimer -= Time.deltaTime;
 
         if(firingTimer <= 0)
         {
-            Instantiate(pfProjectile, transform.position, Quaternion.identity);
+            GameObject newProjectile = Instantiate(pfProjectile, transform.position, Quaternion.identity);
+           // newProjectile.GetComponent<EnemyProjectile>().Setup(Vector3.down);
             firingTimer = fireRate + UnityEngine.Random.Range(-fireRateVariation, fireRateVariation);
         }
+    }
+
+    void MovementLogic()
+    {
+        //if(moveDirection != Vector3.zero)
+        //{
+        //    transform.position += moveDirection * enemy.MoveSpeed * Time.deltaTime;
+        //}
+    }
+
+    public void SetTargetDestination(Vector3 destination)
+    {
+        targetDestination = destination;
+    }
+
+    public void SetMoveSpeed(float moveSpeed)
+    {
+        this.moveSpeed = moveSpeed;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -79,13 +101,18 @@ public class Enemy : MonoBehaviour
 
     IEnumerator DeathRoutine()
     {
-        gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        gameObject.GetComponent<Collider2D>().enabled = false;
         moveSpeed = 0;
         firingTimer = Mathf.Infinity;
 
         OnEnemyDeath?.Invoke(this, EventArgs.Empty);
         audioSource.Play();
-        animator.SetTrigger("OnEnemyDeath");
+
+        if(animator != null)
+        {
+            animator.SetTrigger("OnEnemyDeath");
+        }
+       
         yield return new WaitForSeconds(2.75f);
         Destroy(this.gameObject);
     }

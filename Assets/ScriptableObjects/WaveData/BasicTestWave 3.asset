@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0002066c005170b47840b011e1a3cd3c, type: 3}
+  m_Name: BasicTestWave 3
+  m_EditorClassIdentifier: 
+  enemyMovementLogic: {fileID: 11400000, guid: 3cdc894d2b25a4a43ac46efab2d55ef8, type: 2}
+  pfEnemy: {fileID: 2322037776285537093, guid: 620524a1d0c3ec24db5a85e8b036f077, type: 3}
+  enemyTotal: 5
+  spawnPoint: {fileID: 8510820940821055627, guid: ea0a8615169f7c047aeccae8049fc344, type: 3}
+  spawnFrequency: 1.25
+  timeToNextWave: 0

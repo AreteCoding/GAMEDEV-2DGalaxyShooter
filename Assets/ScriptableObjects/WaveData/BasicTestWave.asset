@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: BasicTestWave
   m_EditorClassIdentifier: 
   enemyMovementLogic: {fileID: 11400000, guid: 3cdc894d2b25a4a43ac46efab2d55ef8, type: 2}
-  pfEnemy: {fileID: 2322037776285537093, guid: 900de68aa34081b4988a780ce1b20707, type: 3}
+  pfEnemy: {fileID: 9203839329351390872, guid: 185f658018b96ed4686c7b10bea666a1, type: 3}
   enemyTotal: 5
   spawnPoint: {fileID: 5780324158561750124, guid: 9410665eacb4e024d87603c2be4115f7, type: 3}
-  spawnFrequency: 0.3
+  spawnFrequency: 0.5
   timeToNextWave: 10
