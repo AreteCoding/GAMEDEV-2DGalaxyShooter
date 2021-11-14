@@ -9,13 +9,37 @@ public class PowerupVisual : MonoBehaviour
     [SerializeField] GameObject pfPowerup;
     [SerializeField] AudioClip audioClip;
 
+    Transform target;
+    Vector3 moveDirection;
+
+    private void Awake()
+    {
+        moveDirection = Vector3.down;
+    }
+
     private void Start()
     {
+        target = null;
         Destroy(gameObject, timeToLive);
     }
     void Update()
     {
-        transform.position += Vector3.down * moveSpeed * Time.deltaTime;
+       
+        if(target != null)
+        {
+            moveDirection = Vector3.Normalize(target.position - transform.position);
+            transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        }
+        else
+        {
+            transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        }
+    }
+
+    public void SetTarget(Transform target)
+    {
+        this.target = target;
+        moveSpeed *= 1.5f;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

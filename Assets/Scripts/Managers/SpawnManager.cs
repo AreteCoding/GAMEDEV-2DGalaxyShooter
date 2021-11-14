@@ -42,6 +42,12 @@ public class SpawnManager : MonoBehaviour
 
         foreach (WaveData wave in waveDataList)
         {
+            if(wave == null) 
+            {
+                Debug.Log("SpawnManager: WaveData item is null");
+                continue; 
+            }
+
             GameObject enemyPrefab = wave.GetEnemy();
 
             for (int i = 0; i < wave.GetEnemyTotal(); i++)

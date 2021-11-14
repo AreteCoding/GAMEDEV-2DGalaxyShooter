@@ -77,6 +77,7 @@ public class Player : MonoBehaviour, IVelocity, IDamage
   
     void Update()
     {
+        CheckInputLogic();
         MovementLogic();
         // ReloadLogic();
         CooldownLogic();    
@@ -116,6 +117,22 @@ public class Player : MonoBehaviour, IVelocity, IDamage
     public float GetThrusterAmount()
     {
         return currentThrustAmount/thrustAmountMax;
+    }
+
+    void CheckInputLogic()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+
+            Debug.Log("keycode C pressed");
+
+            PowerupVisual[] allPowerups = FindObjectsOfType<PowerupVisual>();
+            
+            foreach(PowerupVisual powerup in allPowerups)
+            {
+                powerup.SetTarget(gameObject.transform);
+            }
+        }
     }
 
     private void MovementLogic()
